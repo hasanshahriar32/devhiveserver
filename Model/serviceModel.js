@@ -8,5 +8,6 @@ const serviceSchema = new Schema({
   technology: Array,
   features: Array,
   category: Object,
+  price: number,
 });
 module.exports = model("service", serviceSchema);
