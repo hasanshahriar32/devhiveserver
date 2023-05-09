@@ -11,3 +11,4 @@ const serviceSchema = new Schema({
   price: Number,
 });
 module.exports = model("service", serviceSchema);
+// all update fixed
