@@ -38,6 +38,7 @@ app.use("/service", ServicesRoute);
 app.use("/category", CategoryRoute);
 app.use("/admin", AdminRoute);
 app.use("/chat", ChatRoute);
+app.use("/developer", DeveloperRoute);
 app.use("/message", MessageRoute);
 app.use("/order", OrderRoute);
 app.use("/", swaggerServe, swaggerSetup);
