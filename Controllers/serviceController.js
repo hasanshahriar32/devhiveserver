@@ -24,6 +24,12 @@ const getDeveloperService = async (req, res) => {
   });
   res.json(service);
 };
+const getCategoryService = async (req, res) => {
+  const service = await serviceModel.find({
+    "category._id": req.params.id,
+  });
+  res.json(service);
+};
 
 const queryService = async (req, res) => {
   const queryData = await serviceModel.find({
@@ -51,6 +57,7 @@ const deleteService = async (req, res) => {
 module.exports = {
   createService,
   getService,
+  getCategoryService,
   getDeveloperService,
   updateService,
   deleteService,
