@@ -3,12 +3,15 @@ const generateToken = require("../config/generateToken");
 const asyncHandler = require("express-async-handler");
 const { uuid } = require("uuidv4");
 const SSLCommerzPayment = require("sslcommerz-lts");
+const serviceModel = require("../Model/serviceModel");
 const store_id = process.env.STORE_ID;
 const store_passwd = process.env.STORE_PASSWORD;
 const is_live = false; //true for live, false for sandbox
 // middleware
 const makeOrder = asyncHandler(async (req, res) => {
   const order = req.query;
+  const product = await serviceModel.findById(order.serviceId);
+  console.log(product);
   console.log(order);
   // res.json("user created")
   //   const OrderExists = await Order.findOne(order.tran_id);
@@ -23,8 +26,8 @@ const makeOrder = asyncHandler(async (req, res) => {
   const dataId = uuid();
   const data = {
     //need to change the price according to the serviceInfo
-    serviceId: "",
-    total_amount: 99.99,
+    serviceId: order?.serviceId,
+    total_amount: product?.price,
     currency: "BDT",
     tran_id: dataId, // use unique tran_id for each api call
     success_url:
@@ -35,9 +38,9 @@ const makeOrder = asyncHandler(async (req, res) => {
       "https://devhiveserver.vercel.app/order/cancel?transactionId=" + dataId,
     ipn_url: "https://devhiveserver.vercel.app/order/ipn",
     shipping_method: "Online",
-    product_name: "Computer.",
-    product_category: "Electronic",
-    product_profile: "general",
+    product_name: product?.slugTitle,
+    product_category: product?.category?.name,
+    product_profile: product?.aboutService,
     cus_name: order.cus_name,
     cus_id: order.cus_id,
     cus_email: order.cus_email,
