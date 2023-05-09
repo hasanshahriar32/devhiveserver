@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderModel = mongoose.Schema(
   {
-    serviceId: { type: Number, trim: true },
+    serviceId: { type: String, trim: true },
     cus_id: { type: String, trim: true },
     total_amount: { type: Number, trim: true },
     currency: { type: String, trim: true },
