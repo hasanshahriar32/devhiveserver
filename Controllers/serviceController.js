@@ -46,6 +46,13 @@ const updateService = async (req, res) => {
   });
   res.send(service);
 };
+
+const priceQuery = async (req, res) => {
+  console.log(req.params.price);
+  const service = await serviceModel.find({ price: { $lt: req.params.price } })
+  res.json(service)
+};
+
 const deleteService = async (req, res) => {
   const id = req.params.id;
   const service = await serviceModel.deleteOne({ id });
@@ -62,4 +69,5 @@ module.exports = {
   deleteService,
   getSingleService,
   queryService,
+  priceQuery
 };

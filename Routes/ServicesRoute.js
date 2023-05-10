@@ -8,6 +8,7 @@ const {
   queryService,
   getDeveloperService,
   getCategoryService,
+  priceQuery,
 } = require("../Controllers/serviceController");
 
 const router = express.Router();
@@ -20,8 +21,12 @@ router.get("/", getService);
 
 router.get("/query/:filter", queryService);
 
+router.get("/filterPrice/:price", priceQuery);
+
 router.get("/single/:id", getSingleService);
+
 router.get("/developer/:id", getDeveloperService);
+
 router.get("/category/:id", getCategoryService);
 
 router.delete("/:id", deleteService);
