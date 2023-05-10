@@ -18,7 +18,7 @@ router.post("/", createService);
 
 router.get("/", getService);
 
-router.get("/:query", queryService);
+router.get("/query/:filter", queryService);
 
 router.get("/single/:id", getSingleService);
 router.get("/developer/:id", getDeveloperService);
