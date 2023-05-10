@@ -18,6 +18,7 @@ const getSingleService = async (req, res) => {
   const service = await serviceModel.findById(req.params.id);
   res.json(service);
 };
+
 const getDeveloperService = async (req, res) => {
   const service = await serviceModel.find({
     "developerInfo.userId": req.params.id,
@@ -32,9 +33,7 @@ const getCategoryService = async (req, res) => {
 };
 
 const queryService = async (req, res) => {
-  const queryData = await serviceModel.find({
-    "developerinfo.title": req.params.query,
-  });
+  const queryData = await serviceModel.find({ "category.name": req.params.filter })
   res.json(queryData);
 };
 
