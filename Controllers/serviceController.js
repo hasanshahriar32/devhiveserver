@@ -1,5 +1,5 @@
 const serviceModel = require("../Model/serviceModel");
-
+const asyncHandler = require("express-async-handler");
 const createService = async (req, res) => {
   const newService = req.body;
   const result = await serviceModel.create(newService);
@@ -37,6 +37,34 @@ const queryService = async (req, res) => {
   });
   res.json(queryData);
 };
+// const queryGist = async (req, res) => {
+//   const page = req.query.page ? parseInt(req.query.page) : 1;
+//   const limit = req.query.limit ? parseInt(req.query.limit) : 7;
+//   const skipIndex = (page - 1) * limit;
+//   const queryData = await serviceModel
+//     .find({
+//       slugTitle: req.params.query,
+//     })
+//     .skip(skipIndex)
+//     .limit(limit);
+//   res.json(queryData);
+// };
+const queryGist = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { slugTitle: { $regex: req.query.search, $options: "i" } },
+          { "category.name": { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const queryData = await serviceModel
+    .find({ ...keyword })
+    .find({})
+    .limit(7);
+  // const queryData = await User.find({ ...keyword }).find;
+  res.json(queryData);
+});
 
 const updateService = async (req, res) => {
   const id = req.params.id;
@@ -62,5 +90,6 @@ module.exports = {
   updateService,
   deleteService,
   getSingleService,
+  queryGist,
   queryService,
 };

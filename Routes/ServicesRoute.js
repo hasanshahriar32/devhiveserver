@@ -8,6 +8,7 @@ const {
   queryService,
   getDeveloperService,
   getCategoryService,
+  queryGist,
 } = require("../Controllers/serviceController");
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.post("/", createService);
 router.get("/", getService);
 
 router.get("/:query", queryService);
+router.get("/slug", queryGist);
 
 router.get("/single/:id", getSingleService);
 router.get("/developer/:id", getDeveloperService);
