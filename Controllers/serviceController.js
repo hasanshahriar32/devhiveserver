@@ -18,6 +18,7 @@ const getSingleService = async (req, res) => {
   const service = await serviceModel.findById(req.params.id);
   res.json(service);
 };
+
 const getDeveloperService = async (req, res) => {
   const service = await serviceModel.find({
     "developerInfo.userId": req.params.id,
@@ -32,9 +33,7 @@ const getCategoryService = async (req, res) => {
 };
 
 const queryService = async (req, res) => {
-  const queryData = await serviceModel.find({
-    "developerinfo.title": req.params.query,
-  });
+  const queryData = await serviceModel.find({ "category.name": req.params.filter })
   res.json(queryData);
 };
 // const queryGist = async (req, res) => {
@@ -75,6 +74,13 @@ const updateService = async (req, res) => {
   });
   res.send(service);
 };
+
+const priceQuery = async (req, res) => {
+  console.log(req.params.price);
+  const service = await serviceModel.find({ price: { $lt: req.params.price } })
+  res.json(service)
+};
+
 const deleteService = async (req, res) => {
   const id = req.params.id;
   const service = await serviceModel.deleteOne({ id });
@@ -92,4 +98,5 @@ module.exports = {
   getSingleService,
   queryGist,
   queryService,
+  priceQuery
 };

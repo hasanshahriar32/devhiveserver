@@ -9,6 +9,7 @@ const {
   getDeveloperService,
   getCategoryService,
   queryGist,
+  priceQuery,
 } = require("../Controllers/serviceController");
 
 const router = express.Router();
@@ -19,11 +20,15 @@ router.post("/", createService);
 
 router.get("/", getService);
 
-router.get("/:query", queryService);
 router.get("/slug", queryGist);
+router.get("/query/:filter", queryService);
+
+router.get("/filterPrice/:price", priceQuery);
 
 router.get("/single/:id", getSingleService);
+
 router.get("/developer/:id", getDeveloperService);
+
 router.get("/category/:id", getCategoryService);
 
 router.delete("/:id", deleteService);
